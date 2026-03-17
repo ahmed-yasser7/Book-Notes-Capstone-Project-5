@@ -1,0 +1,113 @@
+<%- include('partials/header', { title: 'Library' }) %>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <h1>Your Library</h1>
+  <p><%= books.length %> book<%= books.length !== 1 ? 's' : '' %> read so far</p>
+</div>
+
+<!-- Controls Bar -->
+<div class="controls-bar">
+  <div class="search-wrap">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input
+      type="text"
+      class="search-input"
+      id="searchInput"
+      placeholder="Search by title or author..."
+    />
+  </div>
+
+  <select class="sort-select" id="sortSelect" onchange="window.location.href='/?sort='+this.value">
+    <option value="recency" <%= sort === 'recency' ? 'selected' : '' %>>Most Recent</option>
+    <option value="rating"  <%= sort === 'rating'  ? 'selected' : '' %>>Top Rated</option>
+    <option value="title"   <%= sort === 'title'   ? 'selected' : '' %>>A to Z</option>
+  </select>
+</div>
+
+<!-- Books Grid -->
+<% if (books.length === 0) { %>
+  <div class="empty-state">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+    </svg>
+    <h2>No books yet</h2>
+    <p>Start building your library by adding your first book.</p>
+    <a href="/add" class="btn-add">+ Add Your First Book</a>
+  </div>
+<% } else { %>
+  <div class="books-grid" id="booksGrid">
+    <% books.forEach(book => { %>
+      <div class="book-card" data-title="<%= book.title.toLowerCase() %>" data-author="<%= book.author.toLowerCase() %>">
+
+        <!-- Cover Image -->
+        <% if (book.isbn) { %>
+          <img
+            class="book-cover"
+            src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-M.jpg"
+            alt="<%= book.title %> cover"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          <div class="book-cover-placeholder" style="display:none;">
+            <%= book.title.charAt(0) %>
+          </div>
+        <% } else { %>
+          <div class="book-cover-placeholder">
+            <%= book.title.charAt(0) %>
+          </div>
+        <% } %>
+
+        <!-- Book Info -->
+        <div class="book-body">
+          <div class="book-title"><%= book.title %></div>
+          <div class="book-author"><%= book.author %></div>
+
+          <!-- Rating dots (out of 10) -->
+          <div class="book-rating">
+            <div class="rating-dots">
+              <% for (let i = 1; i <= 10; i++) { %>
+                <div class="rating-dot <%= i <= book.rating ? 'filled' : '' %>"></div>
+              <% } %>
+            </div>
+            <span class="rating-number"><%= book.rating %>/10</span>
+          </div>
+
+          <% if (book.notes) { %>
+            <div class="book-notes"><%= book.notes %></div>
+          <% } %>
+
+          <div class="book-date">
+            Read on <%= new Date(book.date_read).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="book-actions">
+          <a href="/edit/<%= book.id %>" class="btn-edit">Edit</a>
+          <form action="/delete/<%= book.id %>?_method=DELETE" method="POST" style="flex:1;">
+            <button type="submit" class="btn-delete" style="width:100%;"
+              onclick="return confirm('Delete this book?')">Delete</button>
+          </form>
+        </div>
+
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<!-- Client-side search filter -->
+<script>
+  document.getElementById('searchInput').addEventListener('input', function () {
+    const query = this.value.toLowerCase();
+    document.querySelectorAll('.book-card').forEach(card => {
+      const title  = card.dataset.title;
+      const author = card.dataset.author;
+      card.style.display = (title.includes(query) || author.includes(query)) ? '' : 'none';
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>
