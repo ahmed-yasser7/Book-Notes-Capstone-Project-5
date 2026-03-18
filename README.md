@@ -10,6 +10,7 @@ A personal book tracking web app where you can log books you have read, rate the
 - Search books by title or author in real time
 - Edit or delete any book entry
 - Dark mode toggle that persists across sessions
+- Click any book to view its full detail page
 
 ## Technologies Used
 
@@ -106,7 +107,6 @@ my-bookshelf/
 
 ## Future Improvements
 
-- Book detail page with full notes view
 - Reading goal tracker
 - Book categories and tags
 - Reading statistics and charts
