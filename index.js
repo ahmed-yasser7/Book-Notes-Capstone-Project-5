@@ -44,6 +44,35 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.get("/add", (req, res) => {
+    res.render("add");
+});
+
+app.post("/add", async (req, res) => {
+    const title = req.body.title;
+    const author = req.body.author;
+    const date_read = req.body.date_read;
+    const rating = req.body.rating;
+    const notes = req.body.notes;
+    const isbn = req.body.isbn;
+    try {
+        await db.query(
+            "INSERT INTO books (title, author, date_read, rating, notes, isbn) VALUES ($1, $2, $3, $4, $5, $6)",
+             [
+                title, 
+                author, 
+                date_read, 
+                rating, 
+                notes,
+                isbn
+            ]);
+            res.redirect("/");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Database error while adding book");
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
