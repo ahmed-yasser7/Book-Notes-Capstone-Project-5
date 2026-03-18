@@ -66,8 +66,8 @@ DB__HOST=localhost
 DB_NAME=books_read
 DB_PASSWORD=your_postgres_password
 DB_PORT=5432
-```USER=your_postgres_username
-DB
+DB_USER=your_postgres_username
+```
 
 4. Set up the database using the SQL commands above in pgAdmin
 
