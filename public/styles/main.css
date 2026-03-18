@@ -577,6 +577,111 @@ footer {
   color: var(--text-primary);
 }
 
+/* ===== BOOK DETAIL PAGE ===== */
+.book-detail-card {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 3rem;
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px var(--shadow);
+  animation: fadeUp 0.4s ease both;
+}
+
+.book-detail-cover-wrap {
+  position: relative;
+}
+
+.book-detail-cover {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 12px 40px var(--shadow-strong);
+  display: block;
+}
+
+.book-detail-placeholder {
+  width: 100%;
+  aspect-ratio: 2/3;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  color: var(--text-secondary);
+}
+
+.book-detail-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.book-detail-author {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-top: 0.4rem;
+}
+
+.book-detail-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--surface-border);
+  border-bottom: 1px solid var(--surface-border);
+  margin-bottom: 1.5rem;
+}
+
+.book-detail-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.meta-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.meta-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.book-detail-notes {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+}
+
+.notes-text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .book-detail-card {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .book-detail-cover-wrap {
+    max-width: 200px;
+    margin: 0 auto;
+  }
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 600px) {
   .header-inner { padding: 0 1rem; }

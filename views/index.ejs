@@ -45,15 +45,17 @@
 
         <!-- Cover Image -->
         <% if (book.isbn) { %>
-          <img
-            class="book-cover"
-            src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-M.jpg"
-            alt="<%= book.title %> cover"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-          />
-          <div class="book-cover-placeholder" style="display:none;">
-            <%= book.title.charAt(0) %>
-          </div>
+          <a href="/book/<%= book.id %>">
+            <img
+              class="book-cover"
+              src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-M.jpg"
+              alt="<%= book.title %> cover"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="book-cover-placeholder" style="display:none;">
+              <%= book.title.charAt(0) %>
+            </div>
+          </a>
         <% } else { %>
           <div class="book-cover-placeholder">
             <%= book.title.charAt(0) %>
@@ -62,7 +64,9 @@
 
         <!-- Book Info -->
         <div class="book-body">
-          <div class="book-title"><%= book.title %></div>
+          <a href="/book/<%=book.id%>" style="text-decoration: none; color: inherit;">
+            <div class="book-title"><%= book.title %></div>
+          </a>
           <div class="book-author"><%= book.author %></div>
 
           <!-- Rating dots (out of 10) -->
